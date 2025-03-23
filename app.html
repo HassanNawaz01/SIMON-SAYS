@@ -9,10 +9,22 @@
             text-align: center;
             font-family: Arial, sans-serif;
             background-color: #ffccdd;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
         }
-        .container {
-            margin-top: 20px;
+
+        .game-container {
+            border: 3px solid white;
+            border-radius: 20px;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
+
         .simon-board {
             display: grid;
             grid-template-columns: repeat(2, 150px);
@@ -20,6 +32,7 @@
             justify-content: center;
             margin-top: 20px;
         }
+
         .color-btn {
             width: 150px;
             height: 150px;
@@ -30,32 +43,47 @@
             align-items: center;
             justify-content: center;
         }
+
         img {
             width: 100px;
             margin: 1.5rem auto;
             mix-blend-mode: color-burn;
-            pointer-events: none; /* Prevents the image from interfering with click events */
+            pointer-events: none;
         }
+
         .pink { background-color: #df83b1; }
         .lightpink { background-color: #b68a9f; }
         .hotpink { background-color: #e491d2; }
         .deepink { background-color: #f8e5ee; }
         .active { opacity: 0.5; }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
-    <h1>SIMON SAYS</h1>
-    <p>Follow the pattern and test your memory!</p>
-    <button onclick="startGame()">Start Game</button>
-    <div class="container">
-        <div class="simon-board">
-            <div class="color-btn pink" data-color="pink"><img src="succinctLogo.png" alt="succinct"></div>
-            <div class="color-btn lightpink" data-color="lightpink"><img src="succinctLogo.png" alt="succinct"></div>
-            <div class="color-btn hotpink" data-color="hotpink"><img src="succinctLogo.png" alt="succinct"></div>
-            <div class="color-btn deepink" data-color="deepink"><img src="succinctLogo.png" alt="succinct"></div>
+    <div class="game-container">
+        <h1>SIMON SAYS</h1>
+        <p>Follow the pattern and test your memory!</p>
+        <button onclick="startGame()">Start Game</button>
+        <div class="container">
+            <div class="simon-board">
+                <div class="color-btn pink" data-color="pink"><img src="succinctLogo.png" alt="succinct"></div>
+                <div class="color-btn lightpink" data-color="lightpink"><img src="succinctLogo.png" alt="succinct"></div>
+                <div class="color-btn hotpink" data-color="hotpink"><img src="succinctLogo.png" alt="succinct"></div>
+                <div class="color-btn deepink" data-color="deepink"><img src="succinctLogo.png" alt="succinct"></div>
+            </div>
         </div>
+        <p>Score: <span id="score">0</span></p>
     </div>
-    <p>Score: <span id="score">0</span></p>
+
     <script>
         let sequence = [];
         let playerSequence = [];
@@ -93,7 +121,7 @@
 
         document.querySelectorAll(".color-btn").forEach(btn => {
             btn.addEventListener("click", (e) => {
-                let color = e.currentTarget.dataset.color; // Fix: Ensures correct color selection
+                let color = e.currentTarget.dataset.color;
                 playerSequence.push(color);
 
                 if (playerSequence[playerSequence.length - 1] !== sequence[playerSequence.length - 1]) {
